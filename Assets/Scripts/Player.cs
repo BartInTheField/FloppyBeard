@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     private float defaultGravityScale = 1f;
     private bool wantsToJump = false;
     private bool isDeath = false;
+    private bool playedIsDeath = false;
     private InputManager inputManager;
     private Rigidbody2D rigidBody;
 
@@ -49,10 +50,12 @@ public class Player : MonoBehaviour
             wantsToJump = false;
         }
 
-        if (isDeath)
+        if (isDeath && !playedIsDeath)
         {
             // Zero out the current velocity 
             rigidBody.velocity = Vector2.zero;
+            // Do not set velocity to zero again
+            playedIsDeath = true;
         }
     }
 
