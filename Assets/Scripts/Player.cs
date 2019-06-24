@@ -8,7 +8,6 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float jumpForce = 10f;
 
-    [SerializeField] private float deathForce = 20f;
 
     public event Action OnDeath;
     public event Action OnGoalTouched;
@@ -54,9 +53,6 @@ public class Player : MonoBehaviour
         {
             // Zero out the current velocity 
             rigidBody.velocity = Vector2.zero;
-
-            // Give the player downward force
-            rigidBody.AddForce(Vector2.down * deathForce, ForceMode2D.Impulse);
         }
     }
 
