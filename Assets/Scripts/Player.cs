@@ -29,6 +29,10 @@ public class Player : MonoBehaviour
     private void Start()
     {
         inputManager.OnJump += SetWantsToJump;
+
+        // Do not start gravity till player is ready
+        DeactivateGravity();
+        inputManager.OnPlayerReady += ActivateGravity;
     }
 
     private void FixedUpdate()
@@ -74,6 +78,16 @@ public class Player : MonoBehaviour
                 OnGoalTouched?.Invoke();
             }
         }
+    }
+
+    private void DeactivateGravity()
+    {
+        rigidBody.gravityScale = 0;
+    }
+
+    private void ActivateGravity()
+    {
+        rigidBody.gravityScale = 1;
     }
 
 }

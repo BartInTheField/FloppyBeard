@@ -7,18 +7,31 @@ public class ObstacleSpawner : MonoBehaviour
     [SerializeField] private GameObject[] obstaclePatterns = null;
     [SerializeField] private float timeBetweenSpawn = 2f;
 
-    private void Start()
+    private InputManager inputManager;
+
+    private void Awake()
     {
-        StartCoroutine(StartSpawn(timeBetweenSpawn));
+        // InputManager is always in the scene
+        inputManager = FindObjectOfType<InputManager>();
     }
 
-    private IEnumerator StartSpawn(float waitTime)
+    private void Start()
+    {
+        inputManager.OnPlayerReady += StartSpawning;
+    }
+
+    private void StartSpawning()
+    {
+        StartCoroutine(AwaitSpawn(timeBetweenSpawn));
+    }
+
+    private IEnumerator AwaitSpawn(float waitTime)
     {
         int random = Random.Range(0, obstaclePatterns.Length);
         Instantiate(obstaclePatterns[random], transform.position, Quaternion.identity);
 
         yield return new WaitForSeconds(waitTime);
 
-        StartCoroutine(StartSpawn(waitTime));
+        StartCoroutine(AwaitSpawn(waitTime));
     }
 }
