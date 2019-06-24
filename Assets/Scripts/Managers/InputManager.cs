@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour
 {
-    private string JOYSTICK_A = "joystick button 0";
-
     public event Action OnJump;
     public event Action OnPlayerReady;
 
@@ -26,11 +24,13 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        bool jumpPressed = Input.GetButtonDown("Jump");
+
         if (!gameManager.IsGameOver)
         {
             // Game is not yet over 
 
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(JOYSTICK_A))
+            if (jumpPressed)
             {
                 if (!playerReady)
                 {
@@ -44,7 +44,8 @@ public class InputManager : MonoBehaviour
         else
         {
             // Game is over
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(JOYSTICK_A))
+
+            if (jumpPressed)
             {
                 if (!isRestarting)
                 {

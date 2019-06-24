@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private float scrollSpeed = 5f;
     [SerializeField] private GameObject scorePopUp = null;
+    [SerializeField] private BoxCollider2D groundCollider = null;
     [SerializeField, Range(0f, 1f)]
     private float popupXOffset = 0.5f;
     [SerializeField, Range(0f, 1f)]
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
+        groundCollider.enabled = false;
         isGameOver = true;
         OnGameOver?.Invoke(score);
     }
