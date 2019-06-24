@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         fader.FadeOut();
-        player.OnDead += GameOver;
+        player.OnDeath += GameOver;
         player.OnGoalTouched += PlayerHitGoal;
     }
 

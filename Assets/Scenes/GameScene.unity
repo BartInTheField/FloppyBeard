@@ -1986,7 +1986,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 1114146231}
-    IconType: 3000
+    IconType: 1840
     IconTexture: {fileID: 0}
     IsIconRecursive: 0
     BackgroundType: 0
@@ -2257,7 +2257,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -2291,8 +2291,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc537735d9cbf49489e132d04f721553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 6.5
-  deadForce: 7.5
+  jumpForce: 9
+  deathForce: 7.5
 --- !u!212 &2070812328
 SpriteRenderer:
   m_ObjectHideFlags: 0

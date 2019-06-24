@@ -8,13 +8,14 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float jumpForce = 10f;
 
-    [SerializeField] private float deadForce = 20f;
+    [SerializeField] private float deathForce = 20f;
 
-    public event Action OnDead;
+    public event Action OnDeath;
     public event Action OnGoalTouched;
 
+    private float defaultGravityScale = 1f;
     private bool wantsToJump = false;
-    private bool isDead = false;
+    private bool isDeath = false;
     private InputManager inputManager;
     private Rigidbody2D rigidBody;
 
@@ -31,13 +32,14 @@ public class Player : MonoBehaviour
         inputManager.OnJump += SetWantsToJump;
 
         // Do not start gravity till player is ready
+        defaultGravityScale = rigidBody.gravityScale;
         DeactivateGravity();
         inputManager.OnPlayerReady += ActivateGravity;
     }
 
     private void FixedUpdate()
     {
-        if (wantsToJump && !isDead)
+        if (wantsToJump && !isDeath)
         {
             // Zero out the current velocity 
             rigidBody.velocity = Vector2.zero;
@@ -48,13 +50,13 @@ public class Player : MonoBehaviour
             wantsToJump = false;
         }
 
-        if (isDead)
+        if (isDeath)
         {
             // Zero out the current velocity 
             rigidBody.velocity = Vector2.zero;
 
             // Give the player downward force
-            rigidBody.AddForce(Vector2.down * deadForce, ForceMode2D.Impulse);
+            rigidBody.AddForce(Vector2.down * deathForce, ForceMode2D.Impulse);
         }
     }
 
@@ -67,13 +69,13 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag("Obstacle"))
         {
-            isDead = true;
-            OnDead?.Invoke();
+            isDeath = true;
+            OnDeath?.Invoke();
         }
 
         if (other.CompareTag("Goal"))
         {
-            if (!isDead)
+            if (!isDeath)
             {
                 OnGoalTouched?.Invoke();
             }
@@ -87,7 +89,7 @@ public class Player : MonoBehaviour
 
     private void ActivateGravity()
     {
-        rigidBody.gravityScale = 1;
+        rigidBody.gravityScale = defaultGravityScale;
     }
 
 }

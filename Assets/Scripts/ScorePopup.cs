@@ -35,7 +35,6 @@ public class ScorePopup : MonoBehaviour
     {
         textMesh.text = score + "";
         textMesh.alpha = 1;
-        Debug.Log(textMesh.alpha);
         isScoreSet = true;
         textMesh.DOFade(0, fadeSpeed);
         Destroy(gameObject, fadeSpeed);
