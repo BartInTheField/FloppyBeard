@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DG.Tweening;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private float jumpForce = 10f;
-
+    [SerializeField]
+    private Color deathColor = new Color(0, 0, 0);
+    [SerializeField] private float timeUntilFade = 2f;
 
     public event Action OnDeath;
     public event Action OnGoalTouched;
@@ -18,6 +21,7 @@ public class Player : MonoBehaviour
     private bool playedIsDeath = false;
     private InputManager inputManager;
     private Rigidbody2D rigidBody;
+    private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
@@ -25,6 +29,7 @@ public class Player : MonoBehaviour
         inputManager = FindObjectOfType<InputManager>();
 
         rigidBody = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -54,9 +59,17 @@ public class Player : MonoBehaviour
         {
             // Zero out the current velocity 
             rigidBody.velocity = Vector2.zero;
+            // Make player death color
+            spriteRenderer.color = deathColor;
+            // Fade out the player
+            spriteRenderer.DOFade(0, timeUntilFade);
             // Do not set velocity to zero again
             playedIsDeath = true;
+
+            //Destory player
+            Destroy(gameObject, timeUntilFade);
         }
+
     }
 
     private void SetWantsToJump()
