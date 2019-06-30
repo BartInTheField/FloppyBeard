@@ -2342,6 +2342,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 9.5
+  deathColor: {r: 0.72299933, g: 1, b: 0, a: 1}
+  timeUntilFade: 0.3
 --- !u!212 &2070812328
 SpriteRenderer:
   m_ObjectHideFlags: 0
