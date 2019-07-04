@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText = null;
     [SerializeField] private GameObject gameOverPanelObject = null;
 
-    [SerializeField] private ImpulseFadeTextUI fadingButtonPrompt = null;
+    [SerializeField] private ImpulseFadeCanvasGroup fadingButtonPrompt = null;
 
     private GameManager gameManager;
     private InputManager inputManager;
