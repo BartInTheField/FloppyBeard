@@ -11,10 +11,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Color deathColor = new Color(0, 0, 0);
     [SerializeField] private float timeUntilFade = 2f;
+    [SerializeField] private float deathForce = 4f;
 
     public event Action OnDeath;
     public event Action OnGoalTouched;
 
+    private Vector2 deathImpactDirection;
     private float defaultGravityScale = 1f;
     private bool wantsToJump = false;
     private bool isDeath = false;
@@ -63,13 +65,23 @@ public class Player : MonoBehaviour
             spriteRenderer.color = deathColor;
             // Fade out the player
             spriteRenderer.DOFade(0, timeUntilFade);
-            // Do not set velocity to zero again
+
+            // Push player in opposite direction of impact
+            DisableFreeze();
+            rigidBody.gravityScale = 0;
+            rigidBody.AddForce(deathImpactDirection * deathForce, ForceMode2D.Impulse);
+
             playedIsDeath = true;
 
             //Destory player
             Destroy(gameObject, timeUntilFade);
         }
 
+    }
+
+    private void DisableFreeze()
+    {
+        rigidBody.constraints = RigidbodyConstraints2D.None;
     }
 
     private void SetWantsToJump()
@@ -79,13 +91,17 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Obstacle"))
+        if (other.gameObject.CompareTag("Obstacle"))
         {
+            // Calculate point of impact
+            deathImpactDirection = transform.position - other.transform.position;
+            deathImpactDirection.Normalize();
+
             isDeath = true;
             OnDeath?.Invoke();
         }
 
-        if (other.CompareTag("Goal"))
+        if (other.gameObject.CompareTag("Goal"))
         {
             if (!isDeath)
             {

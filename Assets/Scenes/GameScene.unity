@@ -1372,7 +1372,7 @@ GameObject:
   - component: {fileID: 1694046815}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Obstacle
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2344,6 +2344,7 @@ MonoBehaviour:
   jumpForce: 9.5
   deathColor: {r: 0.72299933, g: 1, b: 0, a: 1}
   timeUntilFade: 0.3
+  deathForce: 8
 --- !u!212 &2070812328
 SpriteRenderer:
   m_ObjectHideFlags: 0
