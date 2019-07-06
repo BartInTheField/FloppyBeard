@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float timeUntilFade = 2f;
     [SerializeField] private float deathForce = 4f;
 
+    [SerializeField] private AudioClip jumpAudio = null;
+    [SerializeField] private AudioClip deathAudio = null;
+
     public event Action OnDeath;
     public event Action OnGoalTouched;
 
@@ -24,12 +27,14 @@ public class Player : MonoBehaviour
     private InputManager inputManager;
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         // InputManager is always in the scene
         inputManager = FindObjectOfType<InputManager>();
 
+        audioSource = GetComponent<AudioSource>();
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -86,6 +91,8 @@ public class Player : MonoBehaviour
 
     private void SetWantsToJump()
     {
+        audioSource.clip = jumpAudio;
+        audioSource.Play();
         wantsToJump = true;
     }
 
@@ -93,12 +100,17 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Obstacle"))
         {
-            // Calculate point of impact
-            deathImpactDirection = transform.position - other.transform.position;
-            deathImpactDirection.Normalize();
+            if(!isDeath) {
+                // Calculate point of impact
+                deathImpactDirection = transform.position - other.transform.position;
+                deathImpactDirection.Normalize();
 
-            isDeath = true;
-            OnDeath?.Invoke();
+                audioSource.clip = deathAudio;
+                audioSource.Play();
+                
+                isDeath = true;
+                OnDeath?.Invoke();
+            }
         }
 
         if (other.gameObject.CompareTag("Goal"))
