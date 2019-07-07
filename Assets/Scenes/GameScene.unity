@@ -3120,6 +3120,7 @@ MonoBehaviour:
   deathColor: {r: 0.72299933, g: 1, b: 0, a: 1}
   timeUntilFade: 0.3
   deathForce: 8
+  rotationSpeed: 12
   jumpAudio: {fileID: 8300000, guid: 1eab56f3252e240ccaf02e19cc3d2f09, type: 3}
   deathAudio: {fileID: 8300000, guid: c254fb3b322304b11bc9d0bbf0aecf68, type: 3}
 --- !u!212 &2070812328
