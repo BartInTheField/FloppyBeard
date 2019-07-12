@@ -8,13 +8,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
   [SerializeField] private float jumpForce = 10f;
-  [SerializeField]
-  private Color deathColor = new Color(0, 0, 0);
   [SerializeField] private float timeUntilFade = 2f;
   [SerializeField] private float deathForce = 4f;
   [SerializeField] private float rotationSpeed = 20f;
   [SerializeField] private AudioClip jumpAudio = null;
   [SerializeField] private AudioClip deathAudio = null;
+  [SerializeField] private SpriteRenderer[] sprites = null;
 
   public event Action OnDeath;
   public event Action OnGoalTouched;
@@ -26,7 +25,6 @@ public class Player : MonoBehaviour
   private bool playedIsDeath = false;
   private InputManager inputManager;
   private Rigidbody2D rigidBody;
-  private SpriteRenderer spriteRenderer;
   private AudioSource audioSource;
 
   private void Awake()
@@ -36,7 +34,6 @@ public class Player : MonoBehaviour
 
     audioSource = GetComponent<AudioSource>();
     rigidBody = GetComponent<Rigidbody2D>();
-    spriteRenderer = GetComponent<SpriteRenderer>();
   }
 
   private void Start()
@@ -81,10 +78,11 @@ public class Player : MonoBehaviour
     {
       // Zero out the current velocity 
       rigidBody.velocity = Vector2.zero;
-      // Make player death color
-      spriteRenderer.color = deathColor;
       // Fade out the player
-      spriteRenderer.DOFade(0, timeUntilFade);
+      foreach (SpriteRenderer sprite in sprites)
+      {
+        sprite.DOFade(0, timeUntilFade);
+      }
 
       // Push player in opposite direction of impact
       DisableFreeze();
