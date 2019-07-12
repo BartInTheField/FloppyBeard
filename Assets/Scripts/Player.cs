@@ -52,10 +52,12 @@ public class Player : MonoBehaviour
     {
       if (rigidBody.velocity.y > 0)
       {
-        RotateToDegrees(45, rotationSpeed);
+        // Upwards rotation
+        RotateToDegrees(45, rotationSpeed * 1.5f);
       }
       else
       {
+        // Downwards rotation
         RotateToDegrees(-45, rotationSpeed);
       }
     }
