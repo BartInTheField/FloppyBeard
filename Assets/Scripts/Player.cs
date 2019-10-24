@@ -8,7 +8,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
   [SerializeField] private float jumpForce = 10f;
-g  [SerializeField] private float deathForce = 4f;
+  [SerializeField] private float timeUntilFade = 2f;
+  [SerializeField] private float deathForce = 4f;
   [SerializeField] private float rotationSpeed = 20f;
   [SerializeField] private AudioClip jumpAudio = null;
   [SerializeField] private AudioClip deathAudio = null;
