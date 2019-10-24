@@ -34,3 +34,8 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+## Peek
+Assets/Ludiq/Ludiq.PeekCore
+Assets/Ludiq/Ludiq.Peek
+Assets/Ludiq.Generated/Transient
